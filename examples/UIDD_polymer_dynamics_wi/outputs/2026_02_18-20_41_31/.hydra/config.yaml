@@ -1,0 +1,88 @@
+dim: 3
+data:
+  cache_path: data_cache_nolog
+  filename: reduced_symm_new
+  reduction:
+    seed: 123
+    pca_dataset: MLDS-NUS/Wis_ParamSweep_New
+    train_dataset: MLDS-NUS/Wis_ParamSweep_New
+    test_dataset: MLDS-NUS/Wis_Holdout_New
+    train_splits:
+    - train
+    - train_slow
+    - train_low
+    batch_size: 32
+    num_bins: 32
+    samples_per_batch: 64
+    arg_transform: scale
+    scale_factor: 1.0
+    skip_train: false
+    skip_test: false
+    load_existing_pca: false
+    train_traj_len: 500
+    filename: pca
+model:
+  symmetric: true
+  load_model: false
+  seed: 12
+  potential:
+    Vscale: false
+    activation: srequ
+    alpha: 0.01
+    scale: 100
+    units:
+    - 128
+    n_pot: 32
+    param_idx:
+    - 1
+  dissipation:
+    activation: tanh
+    alpha: 0.01
+    units:
+    - 32
+    - 32
+    param_idx:
+    - 1
+    is_bounded: true
+  conservation:
+    activation: tanh
+    units:
+    - 32
+    - 32
+    param_idx:
+    - 1
+    is_bounded: true
+  hamiltonian:
+    activation: tanh
+    units:
+    - 32
+    - 32
+    param_idx:
+    - 1
+    is_bounded: false
+  diffusion:
+    alpha: 0.01
+    units:
+    - 32
+    - 32
+    activation: srequ
+    param_idx:
+    - 1
+train:
+  seed: 123
+  num_epochs: 300
+  batch_size: 256
+  checkpoint_every: 10
+  opt:
+    learning_rate: 0.001
+  rop:
+    patience: 20
+    cooldown: 20
+    factor: 0.4
+    rtol: 0.0001
+    min_scale: 1.0e-05
+    accumulation_size: 2000
+  aug_prob: 0.5
+  loss:
+    h1_weight_V: 0.0001
+    l2_factor_V: 0.1
