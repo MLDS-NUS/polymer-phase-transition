@@ -105,7 +105,7 @@ SWEEP_FULL_DIR="$PWD/../../data/reduced_symm_new_train" \
 python -B z2-z3-Interpret/plot_interpret.py wi
 ```
 
-**To reproduce Fig. 1(b), Fig. 4 and Fig. 5 from the raw data, first run `load_dataset("MLDS-NUS/Wis_ParamSweep_New")` once.** It downloads the parquet files (about 190 GB) and builds the Arrow cache (about 200 GB) that the extractor reads; Fig. 5 also renders from these parquet files (see `../../phase_trans_from_image_2_z3/README.md`). Then recompute the observables and rerun the two plotting commands above:
+**Recompute**:
 
 ```bash
 export HF_HOME=/path/to/huggingface_cache  # LOCAL: download directory

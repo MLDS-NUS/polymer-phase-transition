@@ -1,16 +1,6 @@
 # Analytical Model: Long-Chain Limit and Finite-n Monte Carlo
 
-This folder reproduces the analytical-model results of the paper:
-
-| Paper result | Computed by | Plotted by |
-|---|---|---|
-| Fig. 2(e,f), `F_{2,n}(z2)` at Wi = 0.02 and 1.32 for n = 8, 16, 32 and n -> inf | `1-trans-z2/` | `plot_F_grid_panels.py` |
-| Fig. 2(g,h), `F_{23,n}(0, z3)` at Wi = 1.32 and 5.28 for n = 8, 16, 32 and n -> inf | `2-trans-z3/` | `plot_F_grid_panels.py` |
-| Fig. 2(k,n), minimizing sets of `F_{2,inf}` and `F_{23,inf}(0, .)`, Wi_t = 0.95 and 3.79 | the two n -> inf sweeps | `plot_transition_2x2_panels.py` |
-
-**Wi convention.** Every script uses `Wi = beta * 4321 / 45000`, the paper's Wi = 0.096 lambda. The n -> inf sweeps cover Wi = 0.02 to 10: 141 values for `F_2` and 340 for `F_23(0, .)`. Directory names such as `wi_001_10` and file names such as `*_wi_0p66_2p64.py` keep earlier labels; the Wi values inside the scripts are the ones above.
-
-The plotting scripts take their figure geometry and fonts from the machine-learning figures, so run the "Free Energy and Transitions" block of `../examples/UIDD_polymer_dynamics_wi/README.md` first. It writes `2-trans-z3/F_z2_z3_grid_seed1.png`, `1-trans-z2/z2_argmin_data.npz` and `2-trans-z3/z3_argmin_data.npz` there, which are read here.
+This folder reproduces the analytical-model results of the paper: 
 
 ## Setup
 
@@ -62,19 +52,13 @@ python -B plot_F_grid_panels.py          # Fig. 2(e-h): figs/{F2_Wi0.02,F2_Wi1.3
 python -B plot_transition_2x2_panels.py  # Fig. 2(i-n) panels: ../figs/transition_*.{png,pdf,svg}
 ```
 
-`plot_transition_2x2_panels.py` prints `z2: Wi_t = 0.947598` and `z3: Wi_t = 3.790805`. The `_learned` panels are Fig. 2(i,j,l,m) and the `_ninf` panels are Fig. 2(k,n). With `--ninf-only` it writes only the two theory panels, but it still reads the machine-learning data to size them. Axis labels and the "Wi = ..." titles are added by hand.
-
-Optional figures, not used in the paper:
-
 ```bash
-python -B plot_F_grid_z2_z3.py           # F_z2_z3_grid.{png,pdf,svg,csv}: the four profiles in one grid
-python -B 2-trans-z3/profile_targets/plot_profiles_wi_0p66_2p64.py   # 2-trans-z3/F_z3_wi_1p32_5p28.{png,csv}
-python -B plot_argmax_ninf_combined.py   # argmax_ninf_combined.{png,pdf}: both n -> inf minimizing sets
-python -B plot_transition_2x2.py         # transition_2x2.{png,pdf}: learned and theoretical transitions
+python -B plot_F_grid_z2_z3.py  
+python -B 2-trans-z3/profile_targets/plot_profiles_wi_0p66_2p64.py  
+python -B plot_argmax_ninf_combined.py 
+python -B plot_transition_2x2.py 
 ```
 
 Text metrics depend on the matplotlib version; other versions shift some anti-aliased pixels but not the content.
 
-## Code Layout
-
-Only code used for the paper is included. Some modules are needed only for their functions: `2-trans-z3/wi_001_10/run_mc_tilted_wi_001_10.py` supplies the tilted estimator to the fixed-point runner, and `plot_argmax_vs_wi_001_10.py`, `plot_maximizer_vs_wi_001_10.py`, `plot_argmax_ninf_combined.py` and `plot_transition_2x2.py` supply loaders and panel drawing to `plot_transition_2x2_panels.py`. The full-grid Monte Carlo sweeps, their supervisors and preflight checks are not part of this folder.
+ 
